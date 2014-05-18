@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import sys
 
@@ -15,7 +15,7 @@ def make_average(output_filename, image_filenames):
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        print 'usage: %s output-image images ... ' % sys.argv[0]
+        print('usage: %s output-image images ... ' % sys.argv[0])
         sys.exit(1)
 
     output_filename = sys.argv[1]

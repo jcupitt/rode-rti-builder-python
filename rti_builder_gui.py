@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import sys
@@ -10,6 +10,9 @@ from PyQt5.QtWidgets import (QWidget, QAbstractItemView, QApplication, QComboBox
         QDialog, QFileDialog, QGridLayout, QHBoxLayout, QHeaderView, QLabel,
         QProgressDialog, QPushButton, QSizePolicy, QTableWidget, QGraphicsScene,
         QGraphicsView, QTableWidgetItem, QMessageBox)
+
+
+from find_ball import search
 
 class Window(QDialog):
 
@@ -105,8 +108,10 @@ class Window(QDialog):
 
     def process(self):
 
-      print "original h & w", self.sampleImage.originalHeight, self.sampleImage.originalWidth
-      print "scaled h & w", self.sampleImage.scaledHeight, self.sampleImage.scaledWidth
+      print("original h & w", self.sampleImage.originalHeight,
+            self.sampleImage.originalWidth)
+      print("scaled h & w", self.sampleImage.scaledHeight,
+            self.sampleImage.scaledWidth)
 
       scaleCoefficient = self.sampleImage.originalWidth / self.sampleImage.scaledWidth
       ballBBTopLeftX = self.sampleImage.graphicsView.topLeft.x()*scaleCoefficient
@@ -114,12 +119,18 @@ class Window(QDialog):
       ballBBWidth = self.sampleImage.graphicsView.rectangle.rect().width()*scaleCoefficient
       ballBBHeight = self.sampleImage.graphicsView.rectangle.rect().height()*scaleCoefficient
 
-      print ballBBTopLeftX, ballBBTopLeftY, ballBBWidth, ballBBHeight
+      print(ballBBTopLeftX, ballBBTopLeftY, ballBBWidth, ballBBHeight)
+
+      (pos, radius) = search(self.inputFiles[0], ballBBTopLeftX, ballBBTopLeftY,
+                             ballBBWidth, ballBBHeight)
+
+      print('pos =', pos)
+      print('radius =', radius)
 
       QMessageBox.information(self, "Processing",
         "Processing files in " + self.inputPath.text())
 
-      print "executing find-ball3.ws on ", '''
+      print("executing find-ball3.ws on ", '''
       nip2 -bp find-ball3.ws
         --set Workspaces.tab2.G1='Image_file "gertrud_closeup-avg.jpg"'
         --set Workspaces.tab2.G17=2200
@@ -127,7 +138,7 @@ class Window(QDialog):
         --set Workspaces.tab2.G19=500
         --set Workspaces.tab2.G20=500
         --set main=[Workspaces.tab2.F2,Workspaces.tab2.F5]
-        '''
+        ''')
 
       QMessageBox.information(self, "Done",
         "Output written to" + self.outputPath.text())

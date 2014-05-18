@@ -69,7 +69,7 @@ def search(filename, left, top, width, height):
 
 if __name__ == '__main__':
     if len(sys.argv) != 6:
-        print 'usage: %s input-image left top width height' % sys.argv[0]
+        print('usage: %s input-image left top width height' % sys.argv[0])
         sys.exit(1)
 
     filename = sys.argv[1]
@@ -80,6 +80,6 @@ if __name__ == '__main__':
 
     (pos, radius) = search(filename, left, top, width, height)
 
-    print pos.real, pos.imag
-    print radius
+    print(pos.real, pos.imag)
+    print(radius)
 
